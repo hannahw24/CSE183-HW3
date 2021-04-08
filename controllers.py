@@ -36,5 +36,4 @@ url_signer = URLSigner(session)
 @action('index')
 @action.uses(db, auth, 'index.html')
 def index():
-    print("User:", get_user_email())
     return dict()
