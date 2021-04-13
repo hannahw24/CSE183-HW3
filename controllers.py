@@ -36,5 +36,16 @@ url_signer = URLSigner(session)
 @action('index')
 @action.uses(db, auth, 'index.html')
 def index():
-    ### You have to modify the code here as well. 
+    ## TODO: Show to each logged in user the birds they have seen with their count.
+    # The table must have an edit button to edit a row, and also, a +1 button to increase the count
+    # by 1 (this needs to be protected by a signed URL).
+    # On top of the table there is a button to insert a new bird.
     return dict()
+
+# This is an example only, to be used as inspiration for your code to increment the bird count. 
+@action('capitalize/<bird_id>')
+@action.uses(db, auth.user, url_signer.verify())
+def capitalize(bird_id=None):
+    assert bird_id is not None
+    bird = db.bird[bird_id]
+    db(db.bird.id == bird_id).update(bird_name=bird.bird_name.capitalize())
